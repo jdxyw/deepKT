@@ -16,6 +16,16 @@ class DKT(nn.Module):
                  output_dim,
                  device="cpu",
                  cell_type="lstm"):
+        """ The first deep knowledge tracing network architecture.
+
+        :param embed_dim: int, the embedding dim for each skill.
+        :param input_dim: int, the number of skill(question) * 2.
+        :param hidden_dim: int, the number of hidden state dim.
+        :param layer_num: int, the layer number of the sequence number.
+        :param output_dim: int, the number of skill(question).
+        :param device: str, 'cpu' or 'cuda:0', the default value is 'cpu'.
+        :param cell_type: str, the sequence model type, it should be 'lstm', 'rnn' or 'gru'.
+        """
         super(DKT, self).__init__()
         self.embed_dim = embed_dim
         self.input_dim = input_dim
@@ -49,6 +59,13 @@ class DKT(nn.Module):
             raise ValueError("cell type only support lstm, rnn or gru type.")
 
     def forward(self, x, state_in=None):
+        """
+
+        :param x: The input is a tensor(int64) with 2 dimension, like [H, k]. H is the batch size,
+        k is the length of user's skill/question id sequence.
+        :param state_in: optional. The state tensor for sequence model.
+        :return:
+        """
         h0 = torch.zeros((self.layer_num, x.size(0), self.hidden_dim),
                          device=self.device)
         c0 = torch.zeros((self.layer_num, x.size(0), self.hidden_dim),
