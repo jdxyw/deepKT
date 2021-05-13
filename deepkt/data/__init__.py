@@ -1,1 +1,1 @@
-from .dataset import KTDataset
+from .dataset import KTDataset, collate_fn

@@ -66,6 +66,7 @@ class DKT(nn.Module):
         :param state_in: optional. The state tensor for sequence model.
         :return:
         """
+        x = self.skill_embedding(x)
         h0 = torch.zeros((self.layer_num, x.size(0), self.hidden_dim),
                          device=self.device)
         c0 = torch.zeros((self.layer_num, x.size(0), self.hidden_dim),
