@@ -18,7 +18,7 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 def run(args):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    torch.set_num_threads(4)
+
     train_df = pd.read_csv("../data/assist2015_train.csv",
                            header=None,
                            sep='\t')
@@ -64,7 +64,7 @@ if __name__ == "__main__":
                             required=False)
     arg_parser.add_argument("--batch_size",
                             dest="batch_size",
-                            default=32,
+                            default=64,
                             type=int,
                             required=False)
     arg_parser.add_argument("--num_skill",
@@ -74,12 +74,12 @@ if __name__ == "__main__":
                             required=False)
     arg_parser.add_argument("--embed_dim",
                             dest="embed_dim",
-                            default=32,
+                            default=64,
                             type=int,
                             required=False)
     arg_parser.add_argument("--hidden_dim",
                             dest="hidden_dim",
-                            default=128,
+                            default=200,
                             type=int,
                             required=False)
     arg_parser.add_argument("--layer_num",

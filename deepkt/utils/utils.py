@@ -2,7 +2,16 @@ import torch
 import deepkt.loss
 from sklearn.metrics import roc_auc_score, precision_recall_fscore_support, accuracy_score
 import numpy as np
+import os
+import random
 
+def seed_everything(seed=42):
+    random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.backends.cudnn.deterministic = True
 
 def train_epoch(model, train_iterator, optim, criterion, device="cpu"):
     model.train()
