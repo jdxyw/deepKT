@@ -38,7 +38,7 @@ Each line contains two fields separated by `\t`. The first field is the `questio
 └── examples
 ```
 
-| folder       | usage                          |
+| Folder       | Usage                          |
 | ------------ | ------------------------------ |
 | data         | example data                   |
 | deepkt/data  | define PyTorch Dataset         |
