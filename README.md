@@ -49,7 +49,7 @@ Each line contains two fields separated by `\t`. The first field is the `questio
 
 ## References
 
-| Model                  | Paper                                                                                                                              |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| Deep Knowledge Tracing | [Deep Knowledge Tracing](https://arxiv.org/abs/1506.05908)                                                                         |
-| Deep Kowledge Tracing  | [Addressing Two Problems in Deep Knowledge Tracing via Prediction-Consistent Regularization](https://arxiv.org/pdf/1806.02180.pdf) |
+| Model                       | Paper                                                                                                                              |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Deep Knowledge Tracing      | [Deep Knowledge Tracing](https://arxiv.org/abs/1506.05908)                                                                         |
+| Deep Knowledge Tracing Plus | [Addressing Two Problems in Deep Knowledge Tracing via Prediction-Consistent Regularization](https://arxiv.org/pdf/1806.02180.pdf) |
