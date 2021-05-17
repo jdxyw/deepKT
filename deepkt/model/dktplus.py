@@ -9,14 +9,16 @@ import torch.nn as nn
 
 
 class DKTPlus(nn.Module):
-    def __init__(self,
-                 embed_dim,
-                 input_dim,
-                 hidden_dim,
-                 layer_num,
-                 output_dim,
-                 device="cpu",
-                 cell_type="lstm"):
+    def __init__(
+        self,
+        embed_dim,
+        input_dim,
+        hidden_dim,
+        layer_num,
+        output_dim,
+        device="cpu",
+        cell_type="lstm",
+    ):
         """ The first deep knowledge tracing network architecture.
 
         :param embed_dim: int, the embedding dim for each skill.
@@ -41,20 +43,17 @@ class DKTPlus(nn.Module):
         self.fc = nn.Linear(self.hidden_dim, self.output_dim)
 
         if cell_type.lower() == "lstm":
-            self.rnn = nn.LSTM(self.embed_dim,
-                               self.hidden_dim,
-                               self.layer_num,
-                               batch_first=True)
+            self.rnn = nn.LSTM(
+                self.embed_dim, self.hidden_dim, self.layer_num, batch_first=True
+            )
         elif cell_type.lower() == "rnn":
-            self.rnn = nn.RNN(self.embed_dim,
-                              self.hidden_dim,
-                              self.layer_num,
-                              batch_first=True)
+            self.rnn = nn.RNN(
+                self.embed_dim, self.hidden_dim, self.layer_num, batch_first=True
+            )
         elif cell_type.lower() == "gru":
-            self.rnn = nn.GRU(self.embed_dim,
-                              self.hidden_dim,
-                              self.layer_num,
-                              batch_first=True)
+            self.rnn = nn.GRU(
+                self.embed_dim, self.hidden_dim, self.layer_num, batch_first=True
+            )
 
         if self.rnn is None:
             raise ValueError("cell type only support lstm, rnn or gru type.")
@@ -68,10 +67,12 @@ class DKTPlus(nn.Module):
         :return:
         """
         x = self.skill_embedding(x)
-        h0 = torch.zeros((self.layer_num, x.size(0), self.hidden_dim),
-                         device=self.device)
-        c0 = torch.zeros((self.layer_num, x.size(0), self.hidden_dim),
-                         device=self.device)
+        h0 = torch.zeros(
+            (self.layer_num, x.size(0), self.hidden_dim), device=self.device
+        )
+        c0 = torch.zeros(
+            (self.layer_num, x.size(0), self.hidden_dim), device=self.device
+        )
 
         if state_in is None:
             state_in = (h0, c0)

@@ -5,10 +5,11 @@ import numpy as np
 
 
 class KTDataset(torch.utils.data.Dataset):
-    def __init__(self, df, n_skill):
+    def __init__(self, df, n_skill, max_len=200):
         super(KTDataset, self).__init__()
         self.df = df
         self.n_skill = n_skill
+        self.max_len = max_len
 
     def __len__(self):
         return len(self.df)
@@ -16,6 +17,10 @@ class KTDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         qids = self.df[0][idx].split(",")
         correct = self.df[1][idx].split(",")
+
+        if len(qids) > self.max_len:
+            qids = qids[-self.max_len:]
+            correct = correct[-self.max_len:]
 
         qids = list(map(int, qids))
         correct = list(map(int, correct))

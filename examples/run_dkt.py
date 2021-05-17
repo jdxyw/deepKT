@@ -42,6 +42,7 @@ def run(args):
               args.hidden_dim,
               args.layer_num,
               args.num_skill,
+              args.dropout,
               device=device)
     optimizer = torch.optim.Adam(dkt.parameters(), lr=args.learning_rate)
     loss_func = DKTLoss()
@@ -74,12 +75,12 @@ if __name__ == "__main__":
                             required=False)
     arg_parser.add_argument("--embed_dim",
                             dest="embed_dim",
-                            default=64,
+                            default=100,
                             type=int,
                             required=False)
     arg_parser.add_argument("--hidden_dim",
                             dest="hidden_dim",
-                            default=200,
+                            default=100,
                             type=int,
                             required=False)
     arg_parser.add_argument("--layer_num",
@@ -91,6 +92,11 @@ if __name__ == "__main__":
                             dest="output_dim",
                             default=100,
                             type=int,
+                            required=False)
+    arg_parser.add_argument("--dropout",
+                            dest="dropout",
+                            default=0.2,
+                            type=float,
                             required=False)
     arg_parser.add_argument("--cell_type",
                             dest="cell_type",
