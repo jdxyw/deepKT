@@ -34,16 +34,16 @@ class KTDataset(torch.utils.data.Dataset):
                qid.view(-1, 1), torch.LongTensor(correct), torch.LongTensor(mask)
 
 
-def collate_fn(data):
-    q = [x[0] for x in data]
+def collate_fn(data, n_skill):
+    qa = [x[0] for x in data]
     qid = [x[1] for x in data]
     qc = [x[2] for x in data]
     mask = [x[3] for x in data]
-    q = torch.nn.utils.rnn.pad_sequence(q, batch_first=True, padding_value=0)
+    qa = torch.nn.utils.rnn.pad_sequence(qa, batch_first=True, padding_value=n_skill*2)
     qid = torch.nn.utils.rnn.pad_sequence(qid,
                                           batch_first=True,
-                                          padding_value=0)
+                                          padding_value=n_skill)
     qc = torch.nn.utils.rnn.pad_sequence(qc, batch_first=True, padding_value=-1)
     mask = torch.nn.utils.rnn.pad_sequence(mask, batch_first=True, padding_value=0)
 
-    return q, qid, qc, mask
+    return qa, qid, qc, mask

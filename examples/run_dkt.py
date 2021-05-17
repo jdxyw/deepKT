@@ -12,6 +12,7 @@ from deepkt.loss import DKTLoss
 from torch.utils.data import DataLoader
 import pandas as pd
 import logging
+from functools import partial
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
@@ -30,12 +31,12 @@ def run(args):
                                   batch_size=args.batch_size,
                                   num_workers=args.num_worker,
                                   shuffle=True,
-                                  collate_fn=deepkt.data.collate_fn)
+                                  collate_fn=partial(deepkt.data.collate_fn, n_skill=args.num_skill))
     test_dataloader = DataLoader(test,
                                  batch_size=args.batch_size * 2,
                                  num_workers=args.num_worker,
                                  shuffle=False,
-                                 collate_fn=deepkt.data.collate_fn)
+                                 collate_fn=partial(deepkt.data.collate_fn, n_skill=args.num_skill))
 
     dkt = DKT(args.embed_dim,
               args.num_skill * 2 + 1,

@@ -34,13 +34,13 @@ class DKT(nn.Module):
         self.input_dim = input_dim
         self.hidden_dim = hidden_dim
         self.layer_num = layer_num
-        self.output_dim = output_dim
+        self.output_dim = output_dim+1
         self.dropout = dropout
         self.device = device
         self.cell_type = cell_type
         self.rnn = None
 
-        self.skill_embedding = nn.Embedding(self.input_dim, self.embed_dim)
+        self.skill_embedding = nn.Embedding(self.input_dim, self.embed_dim, padding_idx=self.input_dim-1)
 
         if cell_type.lower() == "lstm":
             self.rnn = nn.LSTM(
