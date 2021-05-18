@@ -85,9 +85,9 @@ class DeepIRTLoss(nn.Module):
 
         logits = torch.masked_select(logits, mask)
         targets = torch.masked_select(targets, mask)
-        loss = torch.nn.functional.binary_cross_entropy_with_logits(logits,
-                                                                    targets.float(),
-                                                                    reduction=self.reduce)
+        loss = torch.nn.functional.binary_cross_entropy_with_logits(
+            logits, targets.float(), reduction=self.reduce
+        )
         return loss
 
 

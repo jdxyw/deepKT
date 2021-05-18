@@ -37,8 +37,10 @@ class DeepIRT(nn.Module):
         self.device = device
         self.rnn = None
 
-        self.q_embedding = nn.Embedding(n_skill+1, q_embed_dim, padding_idx=n_skill)
-        self.qa_embedding = nn.Embedding(2*n_skill+1, qa_embed_dim, padding_idx=2*n_skill)
+        self.q_embedding = nn.Embedding(n_skill + 1, q_embed_dim, padding_idx=n_skill)
+        self.qa_embedding = nn.Embedding(
+            2 * n_skill + 1, qa_embed_dim, padding_idx=2 * n_skill
+        )
 
         self.q_kp_relation = nn.Linear(self.q_embed_dim, self.kp_dim)
         self.q_difficulty = nn.Linear(self.q_embed_dim, self.kp_dim)
@@ -82,10 +84,12 @@ class DeepIRT(nn.Module):
         # h0 = torch.zeros((q.size(0), self.n_layer, self.hidden_dim), device=self.device)
         states, _ = self.rnn(qa_embed_data)
         # states_before = torch.cat((h0, states[:, :-1, :]), 1)
-        user_ability = self.user_ability(states).view(batch_size*seq_len, -1)
+        user_ability = self.user_ability(states).view(batch_size * seq_len, -1)
 
-        kp_relation = torch.softmax(self.q_kp_relation(q_embed_data.view(batch_size*seq_len, -1)), dim=1)
-        item_difficulty = self.q_difficulty(q_embed_data.view(batch_size*seq_len, -1))
+        kp_relation = torch.softmax(
+            self.q_kp_relation(q_embed_data.view(batch_size * seq_len, -1)), dim=1
+        )
+        item_difficulty = self.q_difficulty(q_embed_data.view(batch_size * seq_len, -1))
 
         logits = (user_ability - item_difficulty) * kp_relation
         return logits.sum(dim=1), None
