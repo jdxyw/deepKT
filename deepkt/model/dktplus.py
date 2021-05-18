@@ -58,7 +58,7 @@ class DKTPlus(nn.Module):
         if self.rnn is None:
             raise ValueError("cell type only support lstm, rnn or gru type.")
 
-    def forward(self, x, state_in=None):
+    def forward(self, q, qa, state_in=None):
         """
 
         :param x: The input is a tensor(int64) with 2 dimension, like [H, k]. H is the batch size,
@@ -66,17 +66,17 @@ class DKTPlus(nn.Module):
         :param state_in: optional. The state tensor for sequence model.
         :return:
         """
-        x = self.skill_embedding(x)
+        qa = self.skill_embedding(qa)
         h0 = torch.zeros(
-            (self.layer_num, x.size(0), self.hidden_dim), device=self.device
+            (self.layer_num, qa.size(0), self.hidden_dim), device=self.device
         )
         c0 = torch.zeros(
-            (self.layer_num, x.size(0), self.hidden_dim), device=self.device
+            (self.layer_num, qa.size(0), self.hidden_dim), device=self.device
         )
 
         if state_in is None:
             state_in = (h0, c0)
 
-        state, state_out = self.rnn(x, state_in)
+        state, state_out = self.rnn(qa, state_in)
         logits = self.fc(state)
         return logits, state_out

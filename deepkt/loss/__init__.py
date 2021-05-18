@@ -1,1 +1,1 @@
-from .loss import DKTLoss, dkt_predict, DKTPlusLoss
+from .loss import DKTLoss, dkt_predict, DKTPlusLoss, DeepIRTLoss
