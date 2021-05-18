@@ -52,11 +52,11 @@ def run(args):
     for epoch in range(args.epoch):
         deepkt.utils.train_epoch(dkt, train_dataloader, optimizer, loss_func,
                                  device)
-        deepkt.utils.eval_epoch(dkt, test_dataloader, loss_func, device)
+        deepkt.utils.eval_epoch(dkt, test_dataloader, loss_func, deepkt.utils.dkt_eval, device)
 
 
 if __name__ == "__main__":
-    arg_parser = argparse.ArgumentParser(description="train dkt model")
+    arg_parser = argparse.ArgumentParser(description="train dktplus model")
     arg_parser.add_argument("--learning_rate",
                             dest="learning_rate",
                             default=0.001,

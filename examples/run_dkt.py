@@ -54,7 +54,7 @@ def run(args):
     for epoch in range(args.epoch):
         deepkt.utils.train_epoch(dkt, train_dataloader, optimizer, loss_func,
                                  device)
-        deepkt.utils.eval_epoch(dkt, test_dataloader, loss_func, device)
+        deepkt.utils.eval_epoch(dkt, test_dataloader, loss_func, deepkt.utils.dkt_eval, device)
 
 
 if __name__ == "__main__":
