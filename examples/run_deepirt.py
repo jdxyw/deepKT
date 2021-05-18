@@ -61,12 +61,12 @@ if __name__ == "__main__":
     arg_parser = argparse.ArgumentParser(description="train deep IRT model")
     arg_parser.add_argument("--learning_rate",
                             dest="learning_rate",
-                            default=0.005,
+                            default=0.001,
                             type=float,
                             required=False)
     arg_parser.add_argument("--batch_size",
                             dest="batch_size",
-                            default=64,
+                            default=32,
                             type=int,
                             required=False)
     arg_parser.add_argument("--num_skill",
@@ -76,22 +76,22 @@ if __name__ == "__main__":
                             required=False)
     arg_parser.add_argument("--q_embed_dim",
                             dest="q_embed_dim",
-                            default=64,
+                            default=100,
                             type=int,
                             required=False)
     arg_parser.add_argument("--qa_embed_dim",
                             dest="qa_embed_dim",
-                            default=64,
+                            default=100,
                             type=int,
                             required=False)
     arg_parser.add_argument("--hidden_dim",
                             dest="hidden_dim",
-                            default=64,
+                            default=100,
                             type=int,
                             required=False)
     arg_parser.add_argument("--kp_dim",
                             dest="kp_dim",
-                            default=32,
+                            default=64,
                             type=int,
                             required=False)
     arg_parser.add_argument("--layer_num",

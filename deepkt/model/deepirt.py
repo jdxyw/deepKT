@@ -79,10 +79,10 @@ class DeepIRT(nn.Module):
         batch_size = q.size(0)
         seq_len = q.size(1)
 
-        h0 = torch.zeros((q.size(0), self.n_layer, self.hidden_dim), device=self.device)
+        # h0 = torch.zeros((q.size(0), self.n_layer, self.hidden_dim), device=self.device)
         states, _ = self.rnn(qa_embed_data)
-        states_before = torch.cat((h0, states[:, :-1, :]), 1)
-        user_ability = self.user_ability(states_before).view(batch_size*seq_len, -1)
+        # states_before = torch.cat((h0, states[:, :-1, :]), 1)
+        user_ability = self.user_ability(states).view(batch_size*seq_len, -1)
 
         kp_relation = torch.softmax(self.q_kp_relation(q_embed_data.view(batch_size*seq_len, -1)), dim=1)
         item_difficulty = self.q_difficulty(q_embed_data.view(batch_size*seq_len, -1))
