@@ -61,11 +61,11 @@ Optim: Adam
 Scheduler: StepLR, step size 1, gamma 0.9
 ```
 
-| Model    | Test AUC | Other config |
-| -------- | -------- | ------------ |
-| DKT      | 0.731    |              |
-| DKT Plus |          |              |
-| Deep IRT | 0.7309   | KP dim 64    |
+| Model    | Test AUC | Other Config             |
+| -------- | -------- | ------------------------ |
+| DKT      | 0.731    |                          |
+| DKT Plus | 0.7317   | gamma 0.05 reg1 0 reg2 0 |
+| Deep IRT | 0.7309   | KP dim 64                |
 
 ## References
 

@@ -106,12 +106,12 @@ if __name__ == "__main__":
                             required=False)
     arg_parser.add_argument("--reg1",
                             dest="reg1",
-                            default=0.03,
+                            default=0.00,
                             type=float,
                             required=False)
     arg_parser.add_argument("--reg2",
                             dest="reg2",
-                            default=1.0,
+                            default=0.0,
                             type=float,
                             required=False)
     arg_parser.add_argument("--epoch",
