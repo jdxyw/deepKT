@@ -47,9 +47,30 @@ Each line contains two fields separated by `\t`. The first field is the `questio
 | deepkt/utils | define some utils              |
 | examples     | each model has its own example |
 
+## Experiments
+
+```
+Data: `ASSISTments2015`, train 80%, test 20%.
+Epoch: 5
+Learning Rate: 0.001
+Batch Size: 64
+Sequence Type: LSTM, one layer
+Dim: 100 for all embedding layer
+Hidden Dim: 100
+Optim: Adam
+Scheduler: StepLR, step size 1, gamma 0.9
+```
+
+| Model    | Test AUC | Other config |
+| -------- | -------- | ------------ |
+| DKT      | 0.731    |              |
+| DKT Plus |          |              |
+| Deep IRT | 0.7309   | KP dim 64    |
+
 ## References
 
-| Model                       | Paper                                                                                                                              |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| Deep Knowledge Tracing      | [Deep Knowledge Tracing](https://arxiv.org/abs/1506.05908)                                                                         |
-| Deep Knowledge Tracing Plus | [Addressing Two Problems in Deep Knowledge Tracing via Prediction-Consistent Regularization](https://arxiv.org/pdf/1806.02180.pdf) |
+| Model                       | Paper                                                                                                                               |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Deep Knowledge Tracing      | [Deep Knowledge Tracing](https://arxiv.org/abs/1506.05908)                                                                          |
+| Deep Knowledge Tracing Plus | [Addressing Two Problems in Deep Knowledge Tracing via Prediction-Consistent Regularization](https://arxiv.org/pdf/1806.02180.pdf)  |
+| Deep IRT                    | [Deep-IRT: Make Deep Learning Based Knowledge Tracing Explainable Using Item Response Theory](https://arxiv.org/pdf/1904.11738.pdf) |

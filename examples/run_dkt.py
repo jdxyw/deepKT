@@ -51,10 +51,12 @@ def run(args):
     dkt.to(device)
     loss_func.to(device)
 
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.9)
     for epoch in range(args.epoch):
         deepkt.utils.train_epoch(dkt, train_dataloader, optimizer, loss_func,
                                  device)
         deepkt.utils.eval_epoch(dkt, test_dataloader, loss_func, deepkt.utils.dkt_eval, device)
+        scheduler.step()
 
 
 if __name__ == "__main__":
@@ -106,7 +108,7 @@ if __name__ == "__main__":
                             required=False)
     arg_parser.add_argument("--epoch",
                             dest="epoch",
-                            default=10,
+                            default=5,
                             type=int,
                             required=False)
     arg_parser.add_argument("--num_worker",

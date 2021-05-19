@@ -12,6 +12,7 @@ from deepkt.loss import DKTPlusLoss
 from torch.utils.data import DataLoader
 import pandas as pd
 import logging
+from functools import partial
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
@@ -30,12 +31,12 @@ def run(args):
                                   batch_size=args.batch_size,
                                   num_workers=args.num_worker,
                                   shuffle=True,
-                                  collate_fn=deepkt.data.collate_fn)
+                                  collate_fn=partial(deepkt.data.collate_fn, n_skill=args.num_skill))
     test_dataloader = DataLoader(test,
                                  batch_size=args.batch_size * 2,
                                  num_workers=args.num_worker,
                                  shuffle=False,
-                                 collate_fn=deepkt.data.collate_fn)
+                                 collate_fn=partial(deepkt.data.collate_fn, n_skill=args.num_skill))
 
     dkt = DKTPlus(args.embed_dim,
                   args.num_skill * 2 + 1,
@@ -49,11 +50,12 @@ def run(args):
     dkt.to(device)
     loss_func.to(device)
 
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.9)
     for epoch in range(args.epoch):
         deepkt.utils.train_epoch(dkt, train_dataloader, optimizer, loss_func,
                                  device)
         deepkt.utils.eval_epoch(dkt, test_dataloader, loss_func, deepkt.utils.dkt_eval, device)
-
+        scheduler.step()
 
 if __name__ == "__main__":
     arg_parser = argparse.ArgumentParser(description="train dktplus model")
@@ -79,7 +81,7 @@ if __name__ == "__main__":
                             required=False)
     arg_parser.add_argument("--hidden_dim",
                             dest="hidden_dim",
-                            default=128,
+                            default=100,
                             type=int,
                             required=False)
     arg_parser.add_argument("--layer_num",

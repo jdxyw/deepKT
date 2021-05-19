@@ -52,10 +52,12 @@ def run(args):
     deepirt.to(device)
     loss_func.to(device)
 
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.9)
     for epoch in range(args.epoch):
         deepkt.utils.train_epoch(deepirt, train_dataloader, optimizer, loss_func,
                                  device)
         deepkt.utils.eval_epoch(deepirt, test_dataloader, loss_func, deepkt.utils.deepirt_eval, device)
+        scheduler.step()
 
 if __name__ == "__main__":
     arg_parser = argparse.ArgumentParser(description="train deep IRT model")
@@ -66,7 +68,7 @@ if __name__ == "__main__":
                             required=False)
     arg_parser.add_argument("--batch_size",
                             dest="batch_size",
-                            default=32,
+                            default=64,
                             type=int,
                             required=False)
     arg_parser.add_argument("--num_skill",

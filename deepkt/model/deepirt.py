@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-    Paper reference: Deep-IRT: Make Deep Learning Based Knowledge Tracin
+    Paper reference: Deep-IRT: Make Deep Learning Based Knowledge Tracing
     Explainable Using Item Response Theory (https://arxiv.org/pdf/1904.11738.pdf)
 
     Note:

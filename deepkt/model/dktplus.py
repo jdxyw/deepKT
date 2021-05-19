@@ -40,7 +40,7 @@ class DKTPlus(nn.Module):
         self.rnn = None
 
         self.skill_embedding = nn.Embedding(self.input_dim, self.embed_dim)
-        self.fc = nn.Linear(self.hidden_dim, self.output_dim)
+        self.fc = nn.Linear(self.hidden_dim, self.output_dim+1)
 
         if cell_type.lower() == "lstm":
             self.rnn = nn.LSTM(
