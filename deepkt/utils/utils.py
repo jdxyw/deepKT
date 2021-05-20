@@ -104,3 +104,20 @@ def deepirt_eval(logits, qid, targets, mask):
     binary_pred = pred.round()
     target = torch.masked_select(targets, mask).detach().numpy()
     return pred, binary_pred, target
+
+
+def sakt_eval(logits, qid, targets, mask):
+    mask = mask.gt(0).view(-1)
+    targets = targets.view(-1)
+
+    logits = torch.masked_select(logits.view(-1), mask)
+
+    pred = torch.sigmoid(logits).detach().numpy()
+    binary_pred = pred.round()
+    target = torch.masked_select(targets, mask).detach().numpy()
+    return pred, binary_pred, target
+
+
+def future_mask(seq_length):
+    mask = np.triu(np.ones((seq_length, seq_length)), k=1).astype('bool')
+    return torch.from_numpy(mask)
