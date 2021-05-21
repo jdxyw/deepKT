@@ -11,7 +11,7 @@ import deepkt.layer
 
 class SAKTModel(nn.Module):
     def __init__(
-        self, n_skill, embed_dim, dropout, num_heads=4, max_len=200, device="cpu"
+        self, n_skill, embed_dim, dropout, num_heads=4, max_len=64, device="cpu"
     ):
         super(SAKTModel, self).__init__()
         self.n_skill = n_skill
@@ -28,7 +28,7 @@ class SAKTModel(nn.Module):
             n_skill + 1, self.q_embed_dim, padding_idx=n_skill
         )
         self.qa_embedding = nn.Embedding(
-            2 * n_skill + 2, self.qa_embed_dim, padding_idx=2 * n_skill+1
+            2 * n_skill + 2, self.qa_embed_dim, padding_idx=2 * n_skill + 1
         )
         self.pos_embedding = nn.Embedding(self.max_len, self.pos_embed_dim)
 
@@ -36,9 +36,14 @@ class SAKTModel(nn.Module):
             embed_dim=self.embed_dim, num_heads=self.num_heads, dropout=self.dropout
         )
 
-        self.layer_norm = nn.LayerNorm(self.embed_dim)
+        self.key_linear = nn.Linear(self.embed_dim, self.embed_dim)
+        self.value_linear = nn.Linear(self.embed_dim, self.embed_dim)
+        self.query_linear = nn.Linear(self.embed_dim, self.embed_dim)
+        self.layer_norm1 = nn.LayerNorm(self.embed_dim)
+        self.layer_norm2 = nn.LayerNorm(self.embed_dim)
+        self.dropout_layer = nn.Dropout(self.dropout)
         self.ffn = deepkt.layer.FFN(self.embed_dim)
-        self.pred = nn.Linear(self.embed_dim, 1)
+        self.pred = nn.Linear(self.embed_dim, 1, bias=True)
 
     def forward(self, q, qa):
         qa = self.qa_embedding(qa)
@@ -47,16 +52,24 @@ class SAKTModel(nn.Module):
         qa = qa + pos_x
         q = self.q_embedding(q)
 
-        qa = qa.permute(1, 0, 2)
-        q = q.permute(1, 0, 2)
+        key = self.key_linear(qa)
+        value = self.value_linear(qa)
+        query = self.query_linear(q)
 
-        attention_mask = deepkt.utils.future_mask(qa.size(0)).to(self.device)
-        attention_out, _ = self.multi_attention(q, qa, qa, attn_mask=attention_mask)
-        attention_out = self.layer_norm(attention_out + q)
+        key = key.permute(1, 0, 2)
+        value = value.permute(1, 0, 2)
+        query = query.permute(1, 0, 2)
+
+        attention_mask = deepkt.utils.future_mask(key.size(0)).to(self.device)
+        attention_out, _ = self.multi_attention(
+            query, key, value, attn_mask=attention_mask
+        )
+        attention_out = self.layer_norm1(attention_out + query)
         attention_out = attention_out.permute(1, 0, 2)
 
         x = self.ffn(attention_out)
-        x = self.layer_norm(x + attention_out)
+        x = self.dropout_layer(x)
+        x = self.layer_norm2(x + attention_out)
         x = self.pred(x)
 
         return x.squeeze(-1), None

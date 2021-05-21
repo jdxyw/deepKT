@@ -66,11 +66,13 @@ Scheduler: StepLR, step size 1, gamma 0.9
 | DKT      | 0.731    |                          |
 | DKT Plus | 0.7317   | gamma 0.05 reg1 0 reg2 0 |
 | Deep IRT | 0.7309   | KP dim 64                |
+| SAKT     | 0.717    | embed dim 200, 5 heads   |
 
 ## References
 
-| Model                       | Paper                                                                                                                               |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Deep Knowledge Tracing      | [Deep Knowledge Tracing](https://arxiv.org/abs/1506.05908)                                                                          |
-| Deep Knowledge Tracing Plus | [Addressing Two Problems in Deep Knowledge Tracing via Prediction-Consistent Regularization](https://arxiv.org/pdf/1806.02180.pdf)  |
-| Deep IRT                    | [Deep-IRT: Make Deep Learning Based Knowledge Tracing Explainable Using Item Response Theory](https://arxiv.org/pdf/1904.11738.pdf) |
+| Model                            | Paper                                                                                                                               |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Deep Knowledge Tracing           | [Deep Knowledge Tracing](https://arxiv.org/abs/1506.05908)                                                                          |
+| Deep Knowledge Tracing Plus      | [Addressing Two Problems in Deep Knowledge Tracing via Prediction-Consistent Regularization](https://arxiv.org/pdf/1806.02180.pdf)  |
+| Deep IRT                         | [Deep-IRT: Make Deep Learning Based Knowledge Tracing Explainable Using Item Response Theory](https://arxiv.org/pdf/1904.11738.pdf) |
+| Self-Attentive Knowledge Tracing | [A Self-Attentive model for Knowledge Tracing](https://arxiv.org/abs/1907.06837)                                                    |

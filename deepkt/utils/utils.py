@@ -119,5 +119,5 @@ def sakt_eval(logits, qid, targets, mask):
 
 
 def future_mask(seq_length):
-    mask = np.triu(np.ones((seq_length, seq_length)), k=1).astype('bool')
+    mask = np.triu(np.ones((seq_length, seq_length)), k=1).astype("bool")
     return torch.from_numpy(mask)

@@ -90,6 +90,7 @@ class DeepIRTLoss(nn.Module):
         )
         return loss
 
+
 class SAKTLoss(nn.Module):
     def __init__(self, reduce="mean"):
         super(SAKTLoss, self).__init__()
