@@ -52,19 +52,14 @@ class SAKTModel(nn.Module):
         qa = qa + pos_x
         q = self.q_embedding(q)
 
-        key = self.key_linear(qa)
-        value = self.value_linear(qa)
-        query = self.query_linear(q)
+        q = q.permute(1, 0, 2)
+        qa = qa.permute(1, 0, 2)
 
-        key = key.permute(1, 0, 2)
-        value = value.permute(1, 0, 2)
-        query = query.permute(1, 0, 2)
-
-        attention_mask = deepkt.utils.future_mask(key.size(0)).to(self.device)
+        attention_mask = deepkt.utils.future_mask(q.size(0)).to(self.device)
         attention_out, _ = self.multi_attention(
-            query, key, value, attn_mask=attention_mask
+            q, qa, qa, attn_mask=attention_mask
         )
-        attention_out = self.layer_norm1(attention_out + query)
+        attention_out = self.layer_norm1(attention_out + q)
         attention_out = attention_out.permute(1, 0, 2)
 
         x = self.ffn(attention_out)

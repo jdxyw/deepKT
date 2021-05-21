@@ -66,7 +66,7 @@ Scheduler: StepLR, step size 1, gamma 0.9
 | DKT      | 0.731    |                          |
 | DKT Plus | 0.7317   | gamma 0.05 reg1 0 reg2 0 |
 | Deep IRT | 0.7309   | KP dim 64                |
-| SAKT     | 0.717    | embed dim 200, 5 heads   |
+| SAKT     | 0.718    | embed dim 200, 5 heads   |
 
 ## References
 
