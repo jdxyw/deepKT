@@ -56,9 +56,7 @@ class SAKTModel(nn.Module):
         qa = qa.permute(1, 0, 2)
 
         attention_mask = deepkt.utils.future_mask(q.size(0)).to(self.device)
-        attention_out, _ = self.multi_attention(
-            q, qa, qa, attn_mask=attention_mask
-        )
+        attention_out, _ = self.multi_attention(q, qa, qa, attn_mask=attention_mask)
         attention_out = self.layer_norm1(attention_out + q)
         attention_out = attention_out.permute(1, 0, 2)
 
