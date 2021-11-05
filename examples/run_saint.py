@@ -35,7 +35,8 @@ def run(args):
                                  num_workers=args.num_worker,
                                  shuffle=False)
 
-    saint = SaintModel(args.num_skill, args.embed_dim, args.dropout, args.num_heads, args.num_enc, device=device, max_len=100)
+    saint = SaintModel(args.num_skill, args.embed_dim, args.dropout, args.num_heads,
+                       args.num_enc, device=device, max_len=100)
 
     optimizer = torch.optim.Adam(saint.parameters(), lr=args.learning_rate)
     loss_func = SAKTLoss()
